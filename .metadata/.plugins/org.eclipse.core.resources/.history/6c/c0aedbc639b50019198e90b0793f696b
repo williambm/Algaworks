@@ -1,0 +1,20 @@
+package com.example.algamoneyapi.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.algamoneyapi.model.Lancamento;
+import com.example.algamoneyapi.repository.LancamentoRepository;
+
+@Service
+public class LancamentoService {
+
+	@Autowired
+	private LancamentoRepository lancamentoRepository;
+	
+	public Lancamento salvar (Lancamento lancamento) {
+		
+		return null
+	}
+	
+}

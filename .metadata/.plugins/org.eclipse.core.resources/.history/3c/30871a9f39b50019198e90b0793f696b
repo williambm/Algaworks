@@ -1,0 +1,23 @@
+package com.example.algamoneyapi.service;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.example.algamoneyapi.model.Lancamento;
+import com.example.algamoneyapi.repository.LancamentoRepository;
+
+@Service
+public class LancamentoService {
+
+	@Autowired
+	private LancamentoRepository lancamentoRepository;
+	
+	public Lancamento criar (Lancamento lancamento, HttpServletResponse response) {
+		!(lancamento.getPessoa().isAtivo()==true)? response.setHeader("location", HttpStatus.BAD_REQUEST): lancamentoRepository.save(lancamento);
+		
+	}
+	
+}
