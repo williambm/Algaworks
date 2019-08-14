@@ -52,8 +52,17 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
+		
+		<!-- JPAmodelgen -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-jpamodelgen</artifactId>		
+	</dependency>
+	
 	</dependencies>
-
+	
+	
+	
 	<build>
 		<plugins>
 			<plugin>
