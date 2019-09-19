@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.example.algamoneyapi.config.SecurityConfig&apos; to &apos;ResourceServerConfig&apos;&#x0D;&#x0A;- Original project: &apos;algamoney-api&apos;&#x0D;&#x0A;- Original element: &apos;com.example.algamoneyapi.config.SecurityConfig&apos;&#x0D;&#x0A;- Renamed element: &apos;com.example.algamoneyapi.config.ResourceServerConfig&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;SecurityConfig&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;com.example.algamoneyapi.config{SecurityConfig.java[SecurityConfig" matchStrategy="1" name="ResourceServerConfig" qualified="false" references="true" similarDeclarations="false" stamp="1568148495163" textual="false" version="1.0"/>
+</session>

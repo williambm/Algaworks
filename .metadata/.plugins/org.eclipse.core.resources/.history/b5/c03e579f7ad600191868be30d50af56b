@@ -1,0 +1,55 @@
+package com.example.algamoneyapi.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+@Configuration
+@EnableAuthorizationServer
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+	
+	@Autowired
+	private AuthenticationManager authenticationManager; //Pega a autenticação do Resource (admin admin)
+	
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.inMemory()
+			.withClient("angular") 				//usuario
+			.secret("@ngul@r0")					//senha
+			.scopes("read", "write")			//scopo de permissões essas strings tem de ser revalidadas
+			.authorizedGrantTypes("password")	//Tipo de permissão
+			.accessTokenValiditySeconds(1800);	//tempo de vida do Token em segundos
+	}
+	
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints
+			.tokenStore(tokenStore())
+			.accessTokenConverter(accessTokenConverter())
+			.authenticationManager(authenticationManager);
+			
+	}
+
+	@Bean
+	public AccessTokenConverter accessTokenConverter() {
+		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter(); //Conversor da JWT bidirecional para o oauth
+		accessTokenConverter.setSigningKey("algaworks"); // Seta a chave de validação do JWT
+		return accessTokenConverter;
+	}
+
+	@Bean
+	public TokenStore tokenStore() {		
+		return new InMemoryTokenStore();
+	}
+	
+
+}

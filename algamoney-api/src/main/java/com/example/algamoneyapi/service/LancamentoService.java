@@ -22,7 +22,7 @@ public class LancamentoService {
 		//Verifica se a pessoa existe
 		Pessoa pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo()).orElse(null);
 		
-		if(pessoa==null || pessoa.isAtivo()==false) {
+		if(pessoa==null || pessoa.isInativo()) {
 			throw new PessoaInexistenteOuInativaException();
 		}
 		

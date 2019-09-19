@@ -1,5 +1,0 @@
-package com.example.algamoneyapi.repository.filter;
-
-public class LancamentoFilter {
-
-}

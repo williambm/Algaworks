@@ -1,7 +1,0 @@
-package com.example.algamoneyapi.repository;
-
-import org.springframework.data.jpa.repository.config.JpaRepository;
-
-public class PessoaRepository extends JpaRepository<> {
-
-}

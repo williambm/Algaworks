@@ -3,6 +3,7 @@ package com.example.algamoneyapi.exceptionhandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+
 
 @ControllerAdvice
 public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
@@ -116,6 +121,18 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 			this.mensagemDesenvolvedor = mensagemDesenvolvedor;
 		}
 				
+		
+	}
+	
+	@ExceptionHandler({AuthenticationException.class})
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ResponseEntity<Object> AuthenticationExceptio (InsufficientAuthenticationException ex, WebRequest request) {
+		
+		String mensagemUsuario = "Usuário e/ou Senha inválidos";
+		String mensagemDesenvolvedor = Optional.ofNullable(ex.getCause()).orElse(ex).toString();
+		
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario,mensagemDesenvolvedor));
+		return super.handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
 		
 	}
 }
