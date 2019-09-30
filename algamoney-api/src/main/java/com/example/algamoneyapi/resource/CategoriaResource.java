@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +31,13 @@ public class CategoriaResource {
 	private CategoriaRepository categoriaRepository;
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	public List<Categoria> listar(){
 		return categoriaRepository.findAll();
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = categoriaRepository.save(categoria);
@@ -47,6 +50,7 @@ public class CategoriaResource {
 	
 
 	@GetMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable long codigo) {
 		Categoria categoriaBusca = categoriaRepository.findById(codigo).orElse(null);		
 		
@@ -54,6 +58,7 @@ public class CategoriaResource {
 	}
 	
 	@DeleteMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_CATEGORIA')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long codigo) {
 		categoriaRepository.deleteById(codigo);

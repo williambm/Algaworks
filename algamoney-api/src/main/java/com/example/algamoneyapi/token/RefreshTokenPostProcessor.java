@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -16,8 +17,13 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import com.example.algamoneyapi.config.property.AlgamoneyApiProperty;
+
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
+	
+	@Autowired
+	private AlgamoneyApiProperty algamoneyApiProperty;
 
 	//metodo executa primeiro e retorna True
 	@Override
@@ -56,7 +62,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 	private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
 		Cookie refreshTokenCookie = new Cookie("refreshToken",refreshToken);
 		refreshTokenCookie.setHttpOnly(true);//Visivel apenas no HTTP escondido de scripts
-		refreshTokenCookie.setSecure(false);//TODO: Mudar para True em Producao
+		refreshTokenCookie.setSecure(algamoneyApiProperty.getSeguranca().getEnableHttps());
 		refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");// req passa a URI da aplicação e acrescenta oauth/token
 		refreshTokenCookie.setMaxAge(3600*24);//Expira em um dia
 		resp.addCookie(refreshTokenCookie);//passa o cookie na resposta !

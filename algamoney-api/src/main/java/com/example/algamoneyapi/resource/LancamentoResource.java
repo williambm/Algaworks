@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import com.example.algamoneyapi.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.example.algamoneyapi.model.Lancamento;
 import com.example.algamoneyapi.repository.LancamentoRepository;
 import com.example.algamoneyapi.repository.filter.LancamentoFilter;
+import com.example.algamoneyapi.repository.projection.ResumoLancamento;
 import com.example.algamoneyapi.service.LancamentoService;
 import com.example.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
 
@@ -46,17 +48,26 @@ public class LancamentoResource {
 	private MessageSource messageSource;
 	
 	@GetMapping	
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
 		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
 	}
+	
+	@GetMapping(params = "resumo")//SE TIVER NA BUSCA O PARAMETRO RESUMO ELE USA ESTE GET	
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable){
+		return lancamentoRepository.resumir(lancamentoFilter, pageable);
+	}
 
-	@GetMapping("/{codigo}")	
+	@GetMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	public ResponseEntity<Lancamento> buscaPeloCodigo(@PathVariable Long codigo){
 		Lancamento lancamento = lancamentoRepository.findById(codigo).orElse(null);
 		return !(lancamento==null) ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build(); 
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
 		Lancamento lancamentoSalva = lancamentoService.salvar(lancamento);
 		
@@ -67,6 +78,7 @@ public class LancamentoResource {
 	}
 	
 	@DeleteMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO')") //FILTRA PELO CABEÇALHO SE O USUARIO TEM OU NÃO PERMISSÃO
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long codigo) {
 		lancamentoRepository.deleteById(codigo);

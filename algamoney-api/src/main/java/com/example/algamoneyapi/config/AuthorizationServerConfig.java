@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -19,14 +20,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager; //Pega a autenticação do Resource (admin admin)
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
 			.withClient("angular") 				//usuario
-			.secret("@ngul@r0")					//senha
+			.secret("$2a$10$G1j5Rf8aEEiGc/AET9BA..xRR.qCpOUzBZoJd8ygbGy6tb3jsMT9G")					//senha
 			.scopes("read", "write")			//scopo de permissões essas strings tem de ser revalidadas
 			.authorizedGrantTypes("password","refresh_token")	//Tipo de permissão
-			.accessTokenValiditySeconds(20)	//tempo de vida do Token em segundos
+			.accessTokenValiditySeconds(1800)	//tempo de vida do Token em segundos
 			.refreshTokenValiditySeconds(3600 * 24); //tempo de vida do refresh token em segundos (1 dia)
 	}
 	
@@ -36,6 +40,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.tokenStore(tokenStore())
 			.accessTokenConverter(accessTokenConverter())
 			.reuseRefreshTokens(false)
+			.userDetailsService(this.userDetailsService)
 			.authenticationManager(authenticationManager);
 			
 	}
