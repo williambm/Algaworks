@@ -1,0 +1,5 @@
+package com.wbm.tcc.config.init;
+
+public class AppInitializer {
+
+}

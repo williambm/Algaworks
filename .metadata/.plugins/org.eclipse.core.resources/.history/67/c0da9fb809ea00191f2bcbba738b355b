@@ -1,0 +1,12 @@
+package com.wbm.tcc.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import com.wbm.tcc.controller.AlunoController;
+
+@Configuration
+@ComponentScan(basePackageClasses = {AlunoController.class})
+public class WebConfig {
+
+}

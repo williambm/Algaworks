@@ -1,0 +1,5 @@
+package com.wbm.tcc.config;
+
+public class WebConfig {
+
+}
