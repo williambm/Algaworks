@@ -40,7 +40,6 @@ INDEX VERSION 1.131+C:\Desenvolvimento\Algaworks\FullStack\workspace-sts-3.9.9.R
 426861203.index
 590631418.index
 2307585583.index
-1762436876.index
 1721010444.index
 1540814659.index
 1263668681.index
