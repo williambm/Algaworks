@@ -5179,3 +5179,31 @@ Caused by: org.springframework.beans.BeanInstantiationException: Failed to insta
 	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:68)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1151)
 	... 28 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2019-10-08 18:07:42.902
+!MESSAGE Applying stashed commit 'b413e12' failed due to 'Applying stashed changes resulted in a conflict'
+!STACK 1
+org.eclipse.team.core.TeamException: Applying stashed changes resulted in a conflict
+	at org.eclipse.egit.core.op.StashApplyOperation$1.run(StashApplyOperation.java:84)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.egit.core.op.StashApplyOperation.execute(StashApplyOperation.java:89)
+	at org.eclipse.egit.ui.internal.commit.command.StashApplyHandler$1.runInWorkspace(StashApplyHandler.java:54)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.team.core 4 0 2019-10-08 18:07:42.902
+!MESSAGE Applying stashed changes resulted in a conflict
+
+!ENTRY org.eclipse.egit.ui 4 0 2019-10-08 18:08:45.882
+!MESSAGE An internal error occurred
+!STACK 1
+org.eclipse.team.core.TeamException: Cannot cherry-pick commit '38547530f28ad2e79e7e2a92d0e6b503ff8545bc' because it has 0 parents, only commits with exactly one parent are supported.
+	at org.eclipse.egit.core.op.CherryPickOperation$1.run(CherryPickOperation.java:108)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.egit.core.op.CherryPickOperation.execute(CherryPickOperation.java:118)
+	at org.eclipse.egit.ui.internal.commit.command.CherryPickUI$1.performJob(CherryPickUI.java:147)
+	at org.eclipse.egit.ui.internal.jobs.RepositoryJob.run(RepositoryJob.java:59)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.team.core 4 0 2019-10-08 18:08:45.882
+!MESSAGE Cannot cherry-pick commit '38547530f28ad2e79e7e2a92d0e6b503ff8545bc' because it has 0 parents, only commits with exactly one parent are supported.

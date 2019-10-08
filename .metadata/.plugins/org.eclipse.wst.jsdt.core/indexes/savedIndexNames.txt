@@ -1,9 +1,4 @@
 INDEX VERSION 1.4+C:\Desenvolvimento\Algaworks\FullStack\workspace-sts-3.9.9.RELEASE\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1724012592.index
-447477745.index
 3446729433.index
-808479232.index
-1762436876.index
-2763828947.index
 3222744486.index
-3986738286.index
+1762436876.index
